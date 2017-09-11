@@ -7,10 +7,11 @@ app();
 function component() {
   var element = document.createElement('div');
 
-  element.innerHTML = _.join(['Hello', 'App'], ' ');
+  element.innerHTML = _.join(['Hello', 'App', ''], ' ');
   element.classList.add('hello');
 
   return element;
 }
 
-document.body.appendChild(component());
+const view = document.getElementById('view');
+view.appendChild(component());

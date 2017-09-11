@@ -72,7 +72,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_css__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_css__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__style_css__);
 
 
@@ -83,13 +83,14 @@ Object(__WEBPACK_IMPORTED_MODULE_1__app__["a" /* default */])();
 function component() {
   var element = document.createElement('div');
 
-  element.innerHTML = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.join(['Hello', 'App'], ' ');
+  element.innerHTML = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.join(['Hello', 'App', ''], ' ');
   element.classList.add('hello');
 
   return element;
 }
 
-document.body.appendChild(component());
+const view = document.getElementById('view');
+view.appendChild(component());
 
 
 /***/ }),
@@ -17245,8 +17246,18 @@ module.exports = function(module) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = App;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_bar__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_design_singleton__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_bar__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_design_singleton__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_design_factory__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_design_builder__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_structural_decorator__ = __webpack_require__(10);
+
+
+
+
+
+
 
 
 
@@ -17254,19 +17265,60 @@ function App() {
   console.log("App Mount!")
 
   //Base modules concept
-  Object(__WEBPACK_IMPORTED_MODULE_0__components_bar__["a" /* default */])()
+  Object(__WEBPACK_IMPORTED_MODULE_1__components_bar__["a" /* default */])()
 
-  //Design patterns "singleton"
-  //Singleton are really bad:/
-  __WEBPACK_IMPORTED_MODULE_1__components_design_singleton__["a" /* default */].getInstance().increaseCounter()
-  __WEBPACK_IMPORTED_MODULE_1__components_design_singleton__["a" /* default */].getInstance().increaseCounter()
-  console.log("counterModule!", __WEBPACK_IMPORTED_MODULE_1__components_design_singleton__["a" /* default */].getInstance().getCounter())
+  //Design
+
+  //Creational
+  console.log("%c Creational:", __WEBPACK_IMPORTED_MODULE_0__helpers__["a" /* infoColor */]);
+  //singleton
+  __WEBPACK_IMPORTED_MODULE_2__components_design_singleton__["a" /* default */].getInstance().increaseCounter()
+  __WEBPACK_IMPORTED_MODULE_2__components_design_singleton__["a" /* default */].getInstance().increaseCounter()
+  console.log(
+    "%c counterModule! (restricts object creation for a class to only one instance)",
+    __WEBPACK_IMPORTED_MODULE_0__helpers__["b" /* successColor */],
+    __WEBPACK_IMPORTED_MODULE_2__components_design_singleton__["a" /* default */].getInstance().getCounter()
+  )
+
+  //Factory method - creates objects without specifying the exact class to create
+  console.log("%c Factory method - creates objects without specifying the exact class to create", __WEBPACK_IMPORTED_MODULE_0__helpers__["b" /* successColor */])
+  Object(__WEBPACK_IMPORTED_MODULE_3__components_design_factory__["a" /* default */])()
+
+  //builderInt
+  console.log("%c Builder: constructs complex objects by separating construction and representation", __WEBPACK_IMPORTED_MODULE_0__helpers__["b" /* successColor */])
+  Object(__WEBPACK_IMPORTED_MODULE_4__components_design_builder__["a" /* default */])()
+
+  //Structural
+  console.log("%c Structural:", __WEBPACK_IMPORTED_MODULE_0__helpers__["a" /* infoColor */]);
+
+  //Decorator
+  console.log("%c Decorator: dynamically adds/overrides behaviour in an existing method of an object:", __WEBPACK_IMPORTED_MODULE_0__helpers__["b" /* successColor */]);
+  Object(__WEBPACK_IMPORTED_MODULE_5__components_structural_decorator__["a" /* default */])()
 
 }
 
 
 /***/ }),
 /* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const infoColor = "background: blue; color: white";
+/* harmony export (immutable) */ __webpack_exports__["a"] = infoColor;
+
+const resultColor = "background: green; color: white";
+/* unused harmony export resultColor */
+
+const errorColor = "background: red; color: white";
+/* unused harmony export errorColor */
+
+const successColor = "background: #28a745; color: white";
+/* harmony export (immutable) */ __webpack_exports__["b"] = successColor;
+
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17277,7 +17329,7 @@ function bar() {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17317,13 +17369,166 @@ var counterModule = (function () {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = factoryInt;
+// Title: Factory method
+//Description: creates objects without specifying the exact class to create
+
+function factoryInt() {
+
+  var Shapes = {
+    Circle: function (param){
+      console.log("new " + param.color + " circle created with radius " + param.radius + "px");
+    },
+    Square: function (param){
+      console.log("new " + param.color + " square created with " + param.side + "px on a side ");
+    },
+    Triangle: function (param){
+      console.log("new " + param.color + " triangle created with " + param.side + "px on a side ");
+    }
+  }
+
+  function ShapeFactory(size, color){
+    this.size = size;
+    this.color = color;
+  }
+
+  ShapeFactory.prototype ={
+    constructor: ShapeFactory,
+    makeCircle: function () {
+      return new Shapes.Circle({
+        radius: this.size / 2, color: this.color
+      });
+    },
+    makeSquare: function () {
+      return new Shapes.Square({
+        side: this.size, color: this.color
+      });
+    },
+    makeTrinagle: function () {
+      return new Shapes.Triangle({
+        side: this.size * 2, color: this.color
+      });
+    }
+  }
+
+  var factory = new ShapeFactory(100, "green");
+
+  factory.makeSquare();
+  factory.makeSquare();
+  factory.makeTrinagle();
+  factory.makeCircle();
+  factory.makeTrinagle();
+
+}
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = builderInt;
+// Title: Builder
+//Description: constructs complex objects by separating construction and representation
+
+function builderInt() {
+
+  var Person = function () {
+    var firstName, lastName
+
+    var self = {
+      firstName: function (n) {
+        firstName = n
+          return this
+      },
+      lastName: function (n) {
+        lastName = n
+        return this
+      }
+    }
+
+    Object.defineProperty(self, "fullName", {
+      get: function () {
+        return firstName + ' ' + lastName;
+      }
+    });
+
+    return self;
+
+  }
+
+  var x = new Person().firstName('bob').lastName('dole');
+
+  return (
+    console.log("fullName", x.fullName)
+  );
+
+}
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = decoratorInt;
+// Title: Decorator
+//Description: dynamically adds/overrides behaviour in an existing method of an object
+
+function decoratorInt() {
+
+  var tree = {};
+
+  tree.decorate = function () {
+    console.log('Make sure the tree won\'t fall');
+  };
+
+  tree.getDecorator = function (deco) {
+    tree[deco].prototype = this;
+    return new tree[deco];
+  };
+
+  tree.RedBalls = function () {
+    this.decorate = function () {
+      this.RedBalls.prototype.decorate();
+      console.log('Put on some red balls');
+    }
+  };
+
+  tree.BlueBalls = function () {
+    this.decorate = function () {
+      this.BlueBalls.prototype.decorate();
+      console.log('Add blue balls');
+    }
+  };
+
+  tree.Angel = function () {
+    this.decorate = function () {
+      this.Angel.prototype.decorate();
+      console.log('An angel on the top');
+    }
+  };
+
+  tree = tree.getDecorator('BlueBalls');
+  tree = tree.getDecorator('Angel');
+  tree = tree.getDecorator('RedBalls');
+  tree.decorate();
+
+}
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(8);
+var content = __webpack_require__(12);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -17331,7 +17536,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(10)(content, options);
+var update = __webpack_require__(14)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -17348,10 +17553,10 @@ if(false) {
 }
 
 /***/ }),
-/* 8 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(9)(undefined);
+exports = module.exports = __webpack_require__(13)(undefined);
 // imports
 
 
@@ -17362,7 +17567,7 @@ exports.push([module.i, ".hello {\n  color: green;\n}\n", ""]);
 
 
 /***/ }),
-/* 9 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /*
@@ -17444,7 +17649,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -17490,7 +17695,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(11);
+var	fixUrls = __webpack_require__(15);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -17803,7 +18008,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports) {
 
 
