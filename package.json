@@ -1,0 +1,40 @@
+{
+  "name": "vanilla-patterns",
+  "version": "1.0.0",
+  "description": "js patterns",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "test",
+    "start": "webpack --config webpack.config.js",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxmax/vanilla-patterns.git"
+  },
+  "keywords": [
+    "code-reuse-patterns",
+    "design-patterns",
+    "dom-and-browser",
+    "function-patterns",
+    "general",
+    "literals-and-constructors",
+    "object-creation-patterns"
+  ],
+  "author": "maxkv333",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxmax/vanilla-patterns/issues"
+  },
+  "homepage": "https://github.com/maxmax/vanilla-patterns#readme",
+  "dependencies": {
+    "lodash": "4.17.4"
+  },
+  "devDependencies": {
+    "css-loader": "0.28.7",
+    "style-loader": "0.18.2"
+  }
+}
